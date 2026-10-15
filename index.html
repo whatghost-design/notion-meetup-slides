@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PU.YI 實體聚會分享</title>
+<!-- made by PU.YI · whatghost_design -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#1d1d1f; --ink-2:#6e6e73; --ink-3:#a1a1a6;
+  --line:#e5e5ea; --soft:#f5f5f7; --dim:.14;
+  --sans:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:"Space Mono",ui-monospace,Consolas,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;cursor:default;user-select:none}
+
+/* 16:9 舞台，等比縮放 */
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;background:var(--bg);transform-origin:center;overflow:hidden}
+.slide{position:absolute;inset:0;padding:96px 120px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease),visibility 0s .6s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.slide.center{justify-content:center}
+
+/* 字級階層：麵包屑（小）→ 標題（重點）→ 內容 → 提示（灰） */
+.eyebrow{font-family:var(--sans);font-size:20px;letter-spacing:.06em;color:var(--ink-3);margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.eyebrow svg{width:24px;height:24px}
+.eyebrow .sep{width:20px;height:1px;background:var(--ink-3)}
+h1{font-size:104px;font-weight:900;line-height:1.08;letter-spacing:-.01em}
+h2{font-size:64px;font-weight:900;line-height:1.18}
+h3{font-size:34px;font-weight:700;line-height:1.35}
+p{font-size:30px;line-height:1.6;color:var(--ink-2)}
+.muted{color:var(--ink-3)}
+.small{font-size:22px}
+.mono{font-family:var(--mono)}
+b,strong{color:var(--ink);font-weight:700}
+.hint{font-size:24px;line-height:1.6;color:var(--ink-3);margin-top:16px}
+.lead{font-size:30px;line-height:1.6;color:var(--ink-2);margin-top:20px}
+
+/* 逐步出現 / 聚焦 */
+[data-in]{opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+[data-in].shown{opacity:1;transform:none}
+.hl-group [data-hl]{transition:opacity .45s var(--ease),transform .45s var(--ease),background .45s var(--ease),color .45s var(--ease),filter .45s var(--ease),box-shadow .45s var(--ease)}
+.hl-group.focusing [data-hl]:not(.lit){opacity:var(--dim)}
+
+/* 像素圖示 */
+.ic{width:56px;height:56px;fill:currentColor;flex-shrink:0}
+.ic .d{opacity:.35}
+
+/* 重點區塊 */
+.callout{margin-top:40px;display:inline-flex;align-items:center;gap:20px;background:var(--ink);color:#fff;border-radius:20px;padding:28px 40px;font-size:32px;font-weight:700;line-height:1.4}
+.callout .k{font-family:var(--mono);font-size:18px;font-weight:400;color:rgba(255,255,255,.5);letter-spacing:.1em}
+
+/* ---------- 封面：主角是 PU.YI ---------- */
+.cover{display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:center}
+.cover h1{font-family:var(--mono);font-size:176px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.cover .role{margin-top:36px;font-size:34px;color:var(--ink);font-weight:500}
+.cover .role span{color:var(--ink-3);margin:0 14px}
+.cover .meta{margin-top:56px;display:flex;align-items:center;gap:18px;font-size:22px;color:var(--ink-3)}
+.cover .meta .bar{width:40px;height:2px;background:var(--ink-3)}
+.avatar{width:420px;height:420px;border-radius:50%;background:var(--soft);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:24px;border:2px dashed var(--line)}
+
+/* ---------- 自我介紹：時間軸 ---------- */
+.tl{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;position:relative}
+.tl::before{content:"";position:absolute;left:0;right:0;top:11px;height:2px;background:var(--line)}
+.tl .it{position:relative;padding-right:48px}
+.tl .dot{width:24px;height:24px;border-radius:50%;background:var(--ink);margin-bottom:32px}
+.tl .k{font-family:var(--mono);font-size:20px;color:var(--ink-3);margin-bottom:10px;letter-spacing:.06em}
+.tl h3{font-size:38px}
+.tl p{font-size:24px;margin-top:10px;color:var(--ink-3)}
+
+/* ---------- 社群 ---------- */
+.social{display:grid;grid-template-columns:1fr 760px;gap:72px;align-items:center;height:100%}
+.topics{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.topics span{font-size:28px;font-weight:700;padding:14px 30px;border-radius:999px;background:var(--soft)}
+.handle{margin-top:40px;font-family:var(--mono);font-size:24px;color:var(--ink-2)}
+
+/* 自我介紹：直式時間軸＋社群浮出 */
+.intro2{display:grid;grid-template-columns:1fr 620px;gap:72px;align-items:center}
+.vtl{margin-top:48px;display:grid;gap:8px;position:relative}
+.vtl::before{content:"";position:absolute;left:11px;top:20px;bottom:20px;width:2px;background:var(--line)}
+.vtl .it{display:flex;gap:32px;align-items:flex-start;padding:18px 0;position:relative}
+.vtl .dot{width:24px;height:24px;border-radius:50%;background:var(--bg);border:2px solid var(--ink-3);margin-top:6px;flex-shrink:0;transition:all .45s var(--ease)}
+.vtl .k{font-family:var(--mono);font-size:20px;color:var(--ink-3);letter-spacing:.06em}
+.vtl h3{font-size:42px;margin-top:4px}
+.vtl p{font-size:24px;color:var(--ink-3);margin-top:4px}
+.vtl.focusing .it:not(.lit){opacity:.25}
+.vtl.focusing .it.lit .dot{background:var(--ink);border-color:var(--ink);transform:scale(1.25)}
+.social-pop .topics{margin-top:24px;align-items:center}
+.social-pop .topics span{font-size:24px;padding:12px 26px}
+.social-pop .topics .handle{background:none;font-family:var(--mono);font-weight:400;font-size:22px;color:var(--ink-2);margin:0;padding:0 0 0 8px}
+
+/* 議程方塊 */
+.squares{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:20px}
+.sq{aspect-ratio:1/1;max-height:380px;border-radius:28px;background:var(--soft);padding:40px;display:flex;flex-direction:column;justify-content:space-between}
+.sq .n{font-family:var(--mono);font-size:24px;color:var(--ink-3)}
+.sq h3{font-size:38px;line-height:1.3}
+.sq .hint{font-size:21px;margin-top:12px}
+.hl-group.focusing .sq.lit{background:var(--ink);color:#fff;transform:translateY(-8px)}
+.hl-group.focusing .sq.lit .n,.hl-group.focusing .sq.lit .hint{color:rgba(255,255,255,.55)}
+.hl-group.focusing .sq.lit h3{color:#fff}
+.hl-group.focusing .sq:not(.lit){opacity:.45}
+
+/* 大段落（黑底）＞ 子題（淺灰底）＞ 內容頁（白底） */
+.section{background:var(--ink);color:#fff}
+.section .num{font-family:var(--mono);font-size:22px;letter-spacing:.14em;color:rgba(255,255,255,.4);margin-bottom:24px}
+.section h1{color:#fff;font-size:100px}
+.section p{color:rgba(255,255,255,.55);margin-top:28px;font-size:32px}
+.section .ic{width:72px;height:72px;margin-bottom:40px;color:#fff}
+.subsec{background:var(--soft)}
+.subsec .big{font-family:var(--mono);font-size:220px;font-weight:700;line-height:.9;color:var(--line);margin-bottom:12px}
+.subsec h1{font-size:96px}
+.subsec p{margin-top:24px}
+
+/* 三步時間軸 */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:11px;height:2px;background:var(--line)}
+.step{position:relative;padding-right:48px}
+.step .dot{width:24px;height:24px;border-radius:50%;background:var(--bg);border:2px solid var(--ink-3);margin-bottom:36px;transition:all .45s var(--ease)}
+.step h3{font-size:36px}
+.step p{font-size:24px;margin-top:12px}
+.hl-group.focusing .step.lit .dot{background:var(--ink);border-color:var(--ink);transform:scale(1.25)}
+
+/* 對照卡 */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}
+.card{border-radius:24px;background:var(--soft);padding:44px 48px}
+.card.dark{background:var(--ink);color:#fff}
+.card .tag{font-family:var(--mono);font-size:18px;color:var(--ink-3);letter-spacing:.1em;margin-bottom:20px}
+.card.dark .tag{color:rgba(255,255,255,.5)}
+.card ul{list-style:none;display:grid;gap:12px}
+.card li{font-size:28px;color:var(--ink-2);line-height:1.5}
+.card.dark li{color:rgba(255,255,255,.85)}
+.card li::before{content:"— ";color:var(--ink-3)}
+.card .hint{font-size:22px}
+.card.dark .hint{color:rgba(255,255,255,.5)}
+
+/* 貼文流程：卡片＋箭頭＋回圈 */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:48px;margin-top:64px;position:relative}
+.node{border-radius:22px;background:var(--soft);padding:30px 26px 34px;min-height:220px;display:flex;flex-direction:column;gap:28px;position:relative}
+.node .n{width:52px;height:52px;border-radius:50%;border:2px solid var(--ink-3);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:20px;color:var(--ink-2);transition:all .45s var(--ease)}
+.node h3{font-size:28px;line-height:1.4}
+.node:not(:last-child)::after{content:"";position:absolute;right:-41px;top:50%;width:34px;height:16px;transform:translateY(-50%);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='16' viewBox='0 0 34 16'%3E%3Cpath d='M1 8h30M24 1.5l7 6.5-7 6.5' fill='none' stroke='%23a1a1a6' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center}
+.hl-group.focusing .node.lit{background:var(--ink);color:#fff;transform:translateY(-6px)}
+.hl-group.focusing .node.lit .n{border-color:#fff;background:#fff;color:var(--ink)}
+.hl-group.focusing .node:not(.lit){opacity:.3}
+.return{position:relative;margin:28px 7% 0;height:64px;border:2px solid var(--ink-3);border-top:none;border-radius:0 0 28px 28px}
+.return::before{content:"";position:absolute;left:-9px;top:-4px;border:8px solid transparent;border-bottom:12px solid var(--ink-3);border-top:none}
+.return span{position:absolute;left:50%;bottom:-18px;transform:translateX(-50%);background:var(--bg);padding:0 24px;font-size:24px;color:var(--ink-2);white-space:nowrap}
+
+/* 清單列 */
+.rows{margin-top:44px;border-top:2px solid var(--line)}
+.row{display:grid;grid-template-columns:72px 340px 1fr;gap:24px;align-items:baseline;padding:24px 0;border-bottom:2px solid var(--line)}
+.row .n{font-family:var(--mono);font-size:22px;color:var(--ink-3)}
+.row h3{font-size:34px}
+.row p{font-size:25px}
+
+/* 前後端圖解 */
+.fe{display:grid;grid-template-columns:1fr 90px 1fr;align-items:stretch;margin-top:48px}
+.fe .col h3{font-size:32px;margin-bottom:18px;display:flex;align-items:baseline;gap:16px}
+.fe .col h3 small{font-size:20px;font-weight:400;color:var(--ink-3)}
+.layer{border-radius:18px;padding:24px 30px;display:flex;align-items:baseline;gap:24px}
+.layer .k{font-family:var(--mono);font-size:18px;letter-spacing:.1em;width:64px;flex-shrink:0;color:var(--ink-3)}
+.layer .v{font-size:28px;font-weight:700}
+.layer .v small{display:block;font-size:22px;font-weight:400;color:var(--ink-2);margin-top:4px}
+.layer.front{background:var(--soft)}
+.layer.back{background:var(--ink);color:#fff}
+.layer.back .k{color:rgba(255,255,255,.5)}
+.layer.back .v small{color:rgba(255,255,255,.7)}
+.split{display:grid;gap:16px}
+.fused{border:3px solid var(--ink);border-radius:26px;padding:14px;display:grid;gap:0}
+.fused .layer.front{border-radius:14px 14px 0 0}
+.fused .layer.back{border-radius:0 0 14px 14px}
+.fe .arr{display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--ink-3);padding-top:50px}
+
+/* 截圖 */
+.ph{border:2px dashed var(--line);border-radius:24px;background:var(--soft);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;color:var(--ink-3);font-size:22px;padding:24px}
+.ph b{color:var(--ink-2);font-size:26px}
+.shot{border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.08)}
+.shot img{display:block;width:100%}
+
+/* 瀑布流封面 */
+.media-head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+.stat{display:flex;gap:56px}
+.stat .v{font-family:var(--mono);font-size:72px;font-weight:700;line-height:1}
+.stat .l{font-size:22px;color:var(--ink-3);margin-top:8px}
+.masonry{margin:36px -120px 0;padding:0 40px;flex:1;overflow:hidden;display:flex;gap:16px;align-items:flex-start}
+.masonry .col{flex:1;display:flex;flex-direction:column;gap:16px}
+.masonry .col:nth-child(2n){margin-top:-110px}
+.masonry .col:nth-child(3n){margin-top:-50px}
+.masonry figure{border-radius:14px;overflow:hidden;background:var(--soft)}
+.masonry img{display:block;width:100%}
+.hl-group.focusing figure:not(.lit){opacity:.12;filter:grayscale(1) blur(1px);transform:scale(.96)}
+.hl-group.focusing figure.lit{box-shadow:0 20px 50px rgba(0,0,0,.18)}
+.cats{display:flex;gap:16px}
+.chip{font-size:22px;padding:10px 22px;border-radius:999px;background:var(--soft);color:var(--ink-3)}
+.chip .c{font-family:var(--mono);margin-left:8px}
+.hl-group.focusing .chip.lit{background:var(--ink);color:#fff}
+.hl-group.focusing .chip:not(.lit){opacity:.6}
+
+/* 好處標題：大編號＋標題 */
+.headline{display:flex;align-items:flex-end;gap:36px}
+.headline .bn{font-family:var(--mono);font-size:150px;font-weight:700;line-height:.82;letter-spacing:-.04em}
+.headline .eyebrow{margin-bottom:12px}
+.headline h2{font-size:72px;line-height:1.1}
+
+/* 大標語 */
+.quote{font-size:84px;font-weight:900;line-height:1.25}
+
+/* 格子 */
+.grid7{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+.tile{border-radius:20px;background:var(--soft);padding:26px 30px;min-height:140px}
+.tile h3{font-size:30px}
+.tile p{font-size:22px;margin-top:8px}
+.tile.eq{background:var(--ink);color:#fff;display:flex;align-items:center}
+.tile.eq h3{color:#fff;font-size:32px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px}
+.grid4 .tile{min-height:270px;display:flex;flex-direction:column;justify-content:space-between}
+.hl-group.focusing .tile.lit{background:var(--ink);color:#fff}
+.hl-group.focusing .tile.lit h3{color:#fff}
+.hl-group.focusing .tile.lit p{color:rgba(255,255,255,.7)}
+
+/* 鏈狀 */
+.chain{display:flex;align-items:center;gap:24px;margin-top:40px;flex-wrap:wrap}
+.chain .pill{font-size:30px;font-weight:700;padding:20px 34px;border-radius:999px;background:var(--soft)}
+.chain .pill.dark{background:var(--ink);color:#fff}
+.chain .arr{font-size:30px;color:var(--ink-3)}
+
+/* 結尾 */
+.qr{width:260px;height:260px}
+.home{margin-top:48px;display:inline-flex;align-items:center;gap:12px;font:500 22px var(--sans);color:var(--ink);background:var(--soft);border:none;border-radius:999px;padding:14px 28px;cursor:pointer;transition:background .3s}
+.home:hover{background:var(--line)}
+
+/* 頁碼、進度條 */
+#progress{position:absolute;left:0;bottom:0;height:4px;background:var(--ink);transition:width .5s var(--ease);z-index:10}
+#counter{position:absolute;right:48px;bottom:30px;font-family:var(--mono);font-size:20px;color:var(--ink-2);z-index:10;letter-spacing:.06em}
+#counter .t{color:var(--ink-3)}
+#counter.dark{color:#fff}
+#counter.dark .t{color:rgba(255,255,255,.4)}
+#hint{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);font:13px var(--sans);color:#888;transition:opacity 1s}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-wrench" viewBox="0 0 30 30"><path d="M1.5 5.5h3v3h-3zM1.5 9.5h3v3h-3zM1.5 13.5h3v3h-3zM5.5 17.5h3v3h-3zM9.5 5.5h3v3h-3zM9.5 21.5h3v3h-3zM9.5 25.5h3v3h-3zM13.5 9.5h3v3h-3zM17.5 5.5h3v3h-3zM17.5 21.5h3v3h-3zM17.5 25.5h3v3h-3zM5.5 1.5h3v3h-3zM9.5 1.5h3v3h-3zM17.5 1.5h3v3h-3zM21.5 1.5h3v3h-3zM21.5 17.5h3v3h-3zM25.5 5.5h3v3h-3zM25.5 9.5h3v3h-3zM25.5 13.5h3v3h-3z"/><path class="d" d="M5.5 9.5h3v3h-3zM5.5 13.5h3v3h-3zM9.5 17.5h3v3h-3zM13.5 17.5h3v3h-3zM13.5 21.5h3v3h-3z"/></symbol>
+<symbol id="i-bullhorn" viewBox="0 0 30 30"><path d="M1.5 9.5h3v3h-3zM1.5 13.5h3v3h-3zM5.5 5.5h3v3h-3zM9.5 5.5h3v3h-3zM5.5 17.5h3v3h-3zM9.5 17.5h3v3h-3zM9.5 25.5h3v3h-3zM13.5 5.5h3v3h-3zM13.5 21.5h3v3h-3zM9.5 21.5h3v3h-3zM13.5 17.5h3v3h-3zM17.5 17.5h3v3h-3zM21.5 1.5h3v3h-3zM25.5 1.5h3v3h-3zM21.5 21.5h3v3h-3zM25.5 5.5h3v3h-3zM25.5 9.5h3v3h-3zM25.5 13.5h3v3h-3zM25.5 17.5h3v3h-3zM25.5 21.5h3v3h-3z"/><path class="d" d="M5.5 9.5h3v3h-3zM5.5 13.5h3v3h-3zM9.5 13.5h3v3h-3zM21.5 17.5h3v3h-3z"/></symbol>
+<symbol id="i-bulb" viewBox="0 0 30 30"><path d="M5.5 5.5h3v3h-3zM5.5 9.5h3v3h-3zM5.5 13.5h3v3h-3zM9.5 17.5h3v3h-3zM9.5 21.5h3v3h-3zM13.5 13.5h3v3h-3zM13.5 25.5h3v3h-3zM17.5 17.5h3v3h-3zM17.5 21.5h3v3h-3zM21.5 5.5h3v3h-3zM21.5 9.5h3v3h-3zM9.5 1.5h3v3h-3zM13.5 1.5h3v3h-3zM17.5 1.5h3v3h-3zM21.5 13.5h3v3h-3z"/><path class="d" d="M9.5 13.5h3v3h-3zM13.5 17.5h3v3h-3zM17.5 13.5h3v3h-3z"/></symbol>
+<symbol id="i-book" viewBox="0 0 30 30"><path d="M25.5 5.5h3v3h-3zM25.5 9.5h3v3h-3zM25.5 13.5h3v3h-3zM1.5 5.5h3v3h-3zM1.5 9.5h3v3h-3zM1.5 13.5h3v3h-3zM1.5 21.5h3v3h-3zM1.5 17.5h3v3h-3zM5.5 17.5h3v3h-3zM5.5 25.5h3v3h-3zM9.5 17.5h3v3h-3zM9.5 25.5h3v3h-3zM13.5 17.5h3v3h-3zM13.5 25.5h3v3h-3zM5.5 1.5h3v3h-3zM9.5 1.5h3v3h-3zM13.5 1.5h3v3h-3zM17.5 1.5h3v3h-3zM21.5 1.5h3v3h-3zM17.5 17.5h3v3h-3zM21.5 25.5h3v3h-3zM17.5 25.5h3v3h-3zM21.5 5.5h3v3h-3zM21.5 9.5h3v3h-3zM21.5 13.5h3v3h-3zM21.5 17.5h3v3h-3z"/><path class="d" d="M5.5 9.5h3v3h-3zM5.5 13.5h3v3h-3z"/></symbol>
+<symbol id="i-suitcase" viewBox="0 0 30 30"><path d="M1.5 13.5h3v3h-3zM1.5 17.5h3v3h-3zM1.5 21.5h3v3h-3zM1.5 25.5h3v3h-3zM5.5 13.5h3v3h-3zM5.5 9.5h3v3h-3zM9.5 9.5h3v3h-3zM13.5 9.5h3v3h-3zM17.5 9.5h3v3h-3zM21.5 9.5h3v3h-3zM25.5 9.5h3v3h-3zM1.5 9.5h3v3h-3zM5.5 25.5h3v3h-3zM9.5 5.5h3v3h-3zM9.5 17.5h3v3h-3zM9.5 25.5h3v3h-3zM13.5 17.5h3v3h-3zM13.5 25.5h3v3h-3zM17.5 5.5h3v3h-3zM17.5 17.5h3v3h-3zM17.5 25.5h3v3h-3zM21.5 13.5h3v3h-3zM9.5 1.5h3v3h-3zM13.5 1.5h3v3h-3zM17.5 1.5h3v3h-3zM21.5 25.5h3v3h-3zM25.5 13.5h3v3h-3zM25.5 17.5h3v3h-3zM25.5 21.5h3v3h-3zM25.5 25.5h3v3h-3z"/><path class="d" d="M5.5 17.5h3v3h-3zM5.5 21.5h3v3h-3zM9.5 21.5h3v3h-3z"/></symbol>
+<symbol id="i-server" viewBox="0 0 30 30"><path d="M1.5 5.5h3v3h-3zM1.5 9.5h3v3h-3zM1.5 17.5h3v3h-3zM1.5 21.5h3v3h-3zM5.5 13.5h3v3h-3zM5.5 25.5h3v3h-3zM9.5 13.5h3v3h-3zM9.5 25.5h3v3h-3zM13.5 5.5h3v3h-3zM13.5 13.5h3v3h-3zM13.5 17.5h3v3h-3zM13.5 25.5h3v3h-3zM17.5 17.5h3v3h-3zM17.5 13.5h3v3h-3zM17.5 25.5h3v3h-3zM5.5 1.5h3v3h-3zM9.5 1.5h3v3h-3zM13.5 1.5h3v3h-3zM17.5 1.5h3v3h-3zM21.5 1.5h3v3h-3zM21.5 13.5h3v3h-3zM21.5 25.5h3v3h-3zM25.5 5.5h3v3h-3zM25.5 9.5h3v3h-3zM25.5 17.5h3v3h-3zM25.5 21.5h3v3h-3z"/><path class="d" d="M5.5 5.5h3v3h-3zM5.5 9.5h3v3h-3zM5.5 21.5h3v3h-3zM9.5 9.5h3v3h-3zM5.5 17.5h3v3h-3zM9.5 21.5h3v3h-3z"/></symbol>
+<symbol id="i-road" viewBox="0 0 30 30"><path d="M1.5 5.5h3v3h-3zM5.5 9.5h3v3h-3zM9.5 1.5h3v3h-3zM9.5 9.5h3v3h-3zM9.5 25.5h3v3h-3zM13.5 5.5h3v3h-3zM13.5 13.5h3v3h-3zM13.5 21.5h3v3h-3zM13.5 17.5h3v3h-3zM13.5 25.5h3v3h-3zM17.5 9.5h3v3h-3zM17.5 17.5h3v3h-3zM17.5 25.5h3v3h-3zM5.5 1.5h3v3h-3zM1.5 1.5h3v3h-3zM13.5 1.5h3v3h-3zM21.5 9.5h3v3h-3zM21.5 17.5h3v3h-3zM25.5 9.5h3v3h-3zM25.5 13.5h3v3h-3z"/><path class="d" d="M5.5 5.5h3v3h-3zM21.5 13.5h3v3h-3z"/></symbol>
+<symbol id="i-key" viewBox="0 0 30 30"><path d="M1.5 9.5h3v3h-3zM1.5 13.5h3v3h-3zM1.5 17.5h3v3h-3zM5.5 5.5h3v3h-3zM5.5 13.5h3v3h-3zM5.5 21.5h3v3h-3zM9.5 5.5h3v3h-3zM13.5 13.5h3v3h-3zM9.5 21.5h3v3h-3zM13.5 17.5h3v3h-3zM17.5 13.5h3v3h-3zM21.5 13.5h3v3h-3zM25.5 13.5h3v3h-3zM25.5 17.5h3v3h-3z"/><path class="d" d="M5.5 17.5h3v3h-3zM9.5 17.5h3v3h-3zM21.5 17.5h3v3h-3z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 30 30"><path d="M1.5 5.5h3v3h-3zM1.5 9.5h3v3h-3zM1.5 13.5h3v3h-3zM1.5 17.5h3v3h-3zM1.5 21.5h3v3h-3zM1.5 25.5h3v3h-3zM5.5 21.5h3v3h-3zM9.5 17.5h3v3h-3zM13.5 17.5h3v3h-3zM17.5 17.5h3v3h-3zM5.5 1.5h3v3h-3zM1.5 1.5h3v3h-3zM9.5 1.5h3v3h-3zM13.5 1.5h3v3h-3zM17.5 1.5h3v3h-3zM21.5 1.5h3v3h-3zM25.5 1.5h3v3h-3zM21.5 17.5h3v3h-3zM25.5 5.5h3v3h-3zM25.5 9.5h3v3h-3zM25.5 13.5h3v3h-3zM25.5 17.5h3v3h-3z"/><path class="d" d="M5.5 9.5h3v3h-3zM5.5 13.5h3v3h-3zM5.5 17.5h3v3h-3zM9.5 9.5h3v3h-3zM9.5 13.5h3v3h-3zM13.5 9.5h3v3h-3zM13.5 13.5h3v3h-3zM17.5 13.5h3v3h-3z"/></symbol>
+</svg>
+
+<div id="stage">
+
+<!-- P1 封面 -->
+<section class="slide center">
+  <div class="cover">
+    <div>
+      <h1>PU.YI</h1>
+      <div class="role">Notion 顧問<span>·</span>模板設計師<span>·</span>網站設計師</div>
+      <div class="meta"><span class="bar"></span>什麼鬼設計　Notion 接案實戰班 實體聚會</div>
+    </div>
+    <div class="avatar" data-img="img/avatar.jpg">大頭貼</div>
+  </div>
+</section>
+
+<!-- P2 自我介紹：三階段依序亮起，經營什麼鬼設計時浮出社群 -->
+<section class="slide center" data-steps="3">
+  <div class="intro2">
+    <div>
+      <div class="eyebrow">自我介紹</div>
+      <h2>嗨大家好！我是 PU.YI</h2>
+      <div class="vtl hl-group">
+        <div class="it" data-hl="1"><div class="dot"></div><div><div class="k">專業</div><h3>平面設計師</h3></div></div>
+        <div class="it" data-hl="2"><div class="dot"></div><div><div class="k">去年 8 月</div><h3>離職，經營什麼鬼設計</h3></div></div>
+        <div class="it" data-hl="3"><div class="dot"></div><div><div class="k">今年 2 月</div><h3>參加接案實戰班</h3><p>第二屆學員</p></div></div>
+      </div>
+    </div>
+    <div class="social-pop" data-in="2">
+      <div class="ph" data-img="img/social.png" style="height:520px"><b>社群截圖</b>IG / Threads 個人頁<br><span class="small">放 img/social.png 會自動換上</span></div>
+      <div class="topics"><span>Notion</span><span>生產力</span><span>設計</span><span class="handle">@whatghost_design</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- P4 議程 -->
+<section class="slide center" data-steps="3">
+  <div class="eyebrow">今天我會分享</div>
+  <div class="squares hl-group">
+    <div class="sq" data-hl="1"><span class="n">01</span><div><h3>Notion<br>只是工具</h3><div class="hint">更有價值的，是過程中學到的思維</div></div></div>
+    <div class="sq" data-hl="2"><span class="n">02</span><div><h3>為什麼每個人都該經營自媒體？</h3><div class="hint">別緊張，我沒有要賣課</div></div></div>
+    <div class="sq" data-hl="3"><span class="n">03</span><div><h3>結束課程後，還有哪些機會等著你</h3><div class="hint">也會分享我找到案子的方法</div></div></div>
+  </div>
+</section>
+
+<!-- P5 段落 01 -->
+<section class="slide center section">
+  <svg class="ic"><use href="#i-wrench"/></svg>
+  <div class="num">PART 01</div>
+  <h1>Notion 只是工具</h1>
+  <p>更有價值的，是我在過程中學到的思維</p>
+</section>
+
+<!-- P6 從執著 Notion 到提取思維 -->
+<section class="slide center" data-steps="3">
+  <div class="eyebrow">01 Notion 只是工具</div>
+  <h2>剛開始經營自媒體，<br>我很執著用 Notion 解決問題</h2>
+  <div class="steps hl-group">
+    <div class="step" data-hl="1"><div class="dot"></div><h3>什麼都用 Notion</h3><p>模板、工具都圍繞 Notion<br>一開始很有成就感</p></div>
+    <div class="step" data-hl="2"><div class="dot"></div><h3>AI 越來越強</h3><p>Notion 不是最佳解<br>再執著下去會被綁架</p></div>
+    <div class="step" data-hl="3"><div class="dot"></div><h3>我開始提取可以應用到其他地方的能力</h3><p>讓價值在 AI 時代有更多應用</p></div>
+  </div>
+</section>
+
+<!-- P7 子題：思維 1 -->
+<section class="slide center subsec">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>關鍵思維</div>
+  <div class="big">1</div>
+  <h1>建立流程的能力</h1>
+</section>
+
+<!-- P8 以前沒有流程 -->
+<section class="slide center" data-steps="1">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立流程的能力</div>
+  <h2>剛進前公司時，我完全沒有流程</h2>
+  <div class="vs">
+    <div class="card">
+      <div class="tag">以前做社群貼文</div>
+      <ul><li>想到什麼就做什麼</li><li>好點子隔沒幾天就拋到腦後</li><li>沒規劃內容，流程每次都不一樣</li><li>效果跟效率都不好</li></ul>
+    </div>
+    <div class="card dark" data-in="1">
+      <div class="tag">把 NOTION 引入公司之後</div>
+      <ul><li>才開始為工作建立流程</li><li>沒有流程，根本建不出系統</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- P9 貼文製作流程 -->
+<section class="slide center" data-steps="7">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立流程的能力</div>
+  <h2>把貼文製作改成固定流程</h2>
+  <div class="flow hl-group">
+    <div class="node" data-hl="1,7"><span class="n">1</span><h3>規劃社群<br>經營方向</h3></div>
+    <div class="node" data-hl="2,7"><span class="n">2</span><h3>集中<br>收集靈感</h3></div>
+    <div class="node" data-hl="3,7"><span class="n">3</span><h3>靈感<br>轉換成內容</h3></div>
+    <div class="node" data-hl="4,7"><span class="n">4</span><h3>用範本做<br>貼文、內文</h3></div>
+    <div class="node" data-hl="5,7"><span class="n">5</span><h3>上傳<br>自動化</h3></div>
+    <div class="node" data-hl="6,7"><span class="n">6</span><h3>一週後<br>回顧成效</h3></div>
+  </div>
+  <div class="return" data-in="7"><span>成效越來越好，也能持續優化流程</span></div>
+</section>
+
+<!-- P10 把能力應用在其他地方 -->
+<section class="slide center" data-steps="2">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立流程的能力</div>
+  <div style="display:grid;grid-template-columns:1fr 540px;gap:64px;align-items:center">
+    <div>
+      <h2>把能力應用在其他地方</h2>
+      <div class="rows" style="margin-top:36px">
+        <div class="row" style="grid-template-columns:96px 1fr"><span class="n">公司</span><div><h3>報價系統流程</h3><div class="hint" style="margin-top:4px">減少老闆與客戶反覆溝通</div></div></div>
+        <div class="row" style="grid-template-columns:96px 1fr"><span class="n">公司</span><div><h3>勘驗流程</h3><div class="hint" style="margin-top:4px">含收費、後續追蹤</div></div></div>
+        <div class="row" data-in="1" style="grid-template-columns:96px 1fr"><span class="n">離職後</span><div><h3>我的接案流程、內容瀑布流程</h3></div></div>
+      </div>
+      <div class="callout" data-in="2">不用犧牲品質，用更少的時間完成更多事情</div>
+    </div>
+    <div class="ph" data-img="img/flow.png" style="height:540px"><b>圖片建議</b>Notion 貼文流程資料庫<br>或報價系統截圖<br><span class="small">放 img/flow.png 會自動換上</span></div>
+  </div>
+</section>
+
+<!-- P11 子題：思維 2 -->
+<section class="slide center subsec">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>關鍵思維</div>
+  <div class="big">2</div>
+  <h1>建立系統的能力</h1>
+</section>
+
+<!-- P12 前後端：網站 → Notion → AI -->
+<section class="slide center" data-steps="2">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立系統的能力</div>
+  <h2>Notion 讓我看懂前後端的對應</h2>
+  <div class="fe">
+    <div class="col">
+      <h3>網站 <small>我最早理解前後端的地方</small></h3>
+      <div class="split">
+        <div class="layer front"><span class="k">前端</span><span class="v">網站頁面<small>大家看到、可以操作</small></span></div>
+        <div class="layer back"><span class="k">後端</span><span class="v">網站資料<small>儲存、管理資料的地方</small></span></div>
+      </div>
+    </div>
+    <div class="arr" data-in="1">→</div>
+    <div class="col" data-in="1">
+      <h3>Notion <small>前後端的集合體（非技術上）</small></h3>
+      <div class="fused">
+        <div class="layer front"><span class="k">前端</span><span class="v">首頁<small>大家可以操作的地方</small></span></div>
+        <div class="layer back"><span class="k">後端</span><span class="v">每個資料庫<small>資料都存在這裡</small></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="callout" data-in="2"><span class="k">同樣的邏輯</span>請 AI 客製化屬於自己的系統 →</div>
+</section>
+
+<!-- P13 個人控制台 -->
+<section class="slide center">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立系統的能力</div>
+  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:40px;margin-bottom:28px">
+    <h2 style="font-size:52px">請 AI 做的個人控制台</h2>
+    <div class="hint" style="margin:0">不用寫複雜公式，能做到的功能也更多</div>
+  </div>
+  <div class="shot" style="max-height:560px;overflow:hidden"><img src="img/dashboard.png" alt="個人控制台"></div>
+</section>
+
+<!-- P14 小結 -->
+<section class="slide center">
+  <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>小結</div>
+  <div class="quote">AI、資訊爆炸的時代，<br>會越來越需要<br>能梳理<u style="text-underline-offset:14px;text-decoration-thickness:6px">流程</u>、<u style="text-underline-offset:14px;text-decoration-thickness:6px">系統</u>的人</div>
+  <p class="hint" style="margin-top:40px">這些都是脫離 Notion 之後，可以應用在任何地方的關鍵技能</p>
+</section>
+
+<!-- P15 段落 02 -->
+<section class="slide center section">
+  <svg class="ic"><use href="#i-bullhorn"/></svg>
+  <div class="num">PART 02</div>
+  <h1>為什麼每個人<br>都該經營自媒體？</h1>
+  <p>別緊張，我沒有要賣課</p>
+</section>
+
+<!-- P16 一年 125 篇 -->
+<section class="slide" data-steps="3" style="padding-bottom:0;padding-top:80px">
+  <div class="media-head">
+    <div>
+      <div class="eyebrow">02 經營自媒體</div>
+      <div class="stat">
+        <div><div class="v">1 年</div><div class="l">經營時間</div></div>
+        <div><div class="v">125</div><div class="l">篇貼文</div></div>
+      </div>
+    </div>
+    <div class="cats hl-group">
+      <span class="chip" data-hl="1">Notion<span class="c">66</span></span>
+      <span class="chip" data-hl="2">生產力<span class="c">28</span></span>
+      <span class="chip" data-hl="3">個人分享<span class="c">23</span></span>
+    </div>
+  </div>
+  <!-- data-covers：編號:分類（1 Notion / 2 生產力 / 3 個人分享），JS 自動分成錯落直欄 -->
+  <div class="masonry hl-group" id="masonry" data-cols="7"
+       data-covers="013:1,035:2,044:1,080:3,012:1,083:1,031:2,064:1,117:3,022:1,088:2,045:1,092:1,118:3,046:1,032:2,070:1,099:3,103:1,024:2,100:1,054:1,066:2,096:3"></div>
+</section>
+
+<!-- P17 預防針 -->
+<section class="slide center" data-steps="1">
+  <div class="eyebrow">02 經營自媒體<span class="sep"></span>先打個預防針</div>
+  <div class="quote">經營自媒體最大的收穫<br>不是流量</div>
+  <p class="hint" style="margin-top:28px">過程中要隨時提醒自己流量不重要（但偶爾還是會迷失）</p>
+  <p class="lead" data-in="1" style="margin-top:56px">要關注的是：<b>就算沒有流量，也能拿到的好處</b></p>
+</section>
+
+<!-- P18 三個好處 -->
+<section class="slide center" data-steps="3">
+  <div class="eyebrow">02 經營自媒體<span class="sep"></span>就算沒有流量，也有這 3 個好處</div>
+  <div class="squares hl-group">
+    <div class="sq" data-hl="1"><span class="n">01</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-book"/></svg><h3>學得更快<br>紀錄進度</h3></div></div>
+    <div class="sq" data-hl="2"><span class="n">02</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-suitcase"/></svg><h3>好找工作</h3></div></div>
+    <div class="sq" data-hl="3"><span class="n">03</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-key"/></svg><h3>開發各種機會</h3></div></div>
+  </div>
+</section>
+
+<!-- P19 好處 1 -->
+<section class="slide center" data-steps="2">
+  <div class="headline">
+    <span class="bn">01</span>
+    <div><div class="eyebrow">02 經營自媒體<span class="sep"></span>好處</div><h2>學得更快、紀錄進度</h2></div>
+  </div>
+  <div class="chain" style="margin-top:56px">
+    <span class="pill">費曼學習法</span><span class="arr">＝</span>
+    <span class="pill">用教學的方式輸出</span><span class="arr">→</span>
+    <span class="pill dark">學得更快</span>
+  </div>
+  <div class="vs" style="margin-top:44px">
+    <div class="card" data-in="1"><div class="tag">我的狀況</div><ul><li>思考時想法很容易跳躍</li><li>學知識、看書常分心、忘記</li></ul></div>
+    <div class="card dark" data-in="2"><div class="tag">把它做成內容之後</div><ul><li>重新釐清梳理、加深印象</li><li>記錄學習歷程與想法</li></ul></div>
+  </div>
+</section>
+
+<!-- P20 好處 2 -->
+<section class="slide center" data-steps="1">
+  <div class="headline">
+    <span class="bn">02</span>
+    <div><div class="eyebrow">02 經營自媒體<span class="sep"></span>好處</div><h2>好找工作</h2></div>
+  </div>
+  <p class="lead" style="margin-top:28px">面試時一講到有經營自媒體，對方都眼前一亮</p>
+  <div class="grid7">
+    <div class="tile eq"><h3>經營自媒體 ＝</h3></div>
+    <div class="tile"><h3>自我管控</h3><p>會自己找事情做</p></div>
+    <div class="tile"><h3>內容企劃</h3><p>知道受眾是誰、想看什麼</p></div>
+    <div class="tile"><h3>設計能力</h3><p>貼文、銷售頁</p></div>
+    <div class="tile"><h3>行銷能力</h3><p>會做貼文、打廣告</p></div>
+    <div class="tile"><h3>工具能力</h3><p>自然會接觸到各種工具</p></div>
+    <div class="tile"><h3>抗壓、不怕被看</h3><p>作品公開，習慣回饋和負評</p></div>
+    <div class="tile"><h3>對趨勢敏感</h3><p>知道流行什麼、大家在討論什麼</p></div>
+  </div>
+  <div class="callout" data-in="1" style="margin-top:28px">粉絲多不多是其次，自媒體代表你有這些真實的經歷</div>
+</section>
+
+<!-- P21 好處 3 -->
+<section class="slide center" data-steps="1">
+  <div class="headline">
+    <span class="bn">03</span>
+    <div><div class="eyebrow">02 經營自媒體<span class="sep"></span>好處</div><h2>開發各種機會</h2></div>
+  </div>
+  <div class="chain" style="margin-top:56px">
+    <span class="pill">累積信任感</span><span class="arr">→</span>
+    <span class="pill">認識前輩、專家、觀眾</span><span class="arr">→</span>
+    <span class="pill dark">下一個機會的來源</span>
+  </div>
+  <div class="quote" data-in="1" style="margin-top:80px;font-size:64px">但機會不會自己找上門</div>
+</section>
+
+<!-- P22 你可以利用自媒體 -->
+<section class="slide center" data-steps="4">
+  <div class="eyebrow">02 經營自媒體<span class="sep"></span>好處 03 開發各種機會</div>
+  <h2>你可以利用自媒體</h2>
+  <div class="grid4 hl-group">
+    <div class="tile" data-hl="1"><span class="mono muted">01</span><div><h3>公開工作成果<br>和真實回饋</h3><p>讓真實回饋說服有需要的人</p></div></div>
+    <div class="tile" data-hl="2"><span class="mono muted">02</span><div><h3>展示自己<br>做的產品</h3><p>模板、工具、課程，讓人一看就想買</p></div></div>
+    <div class="tile" data-hl="3"><span class="mono muted">03</span><div><h3>把服務<br>講清楚</h3><p>大方說出你有接哪些案子</p></div></div>
+    <div class="tile" data-hl="4"><span class="mono muted">04</span><div><h3>參加<br>實體聚會</h3><p>線上建立好感，線下建立信任</p></div></div>
+  </div>
+</section>
+
+<!-- P23 段落 03 -->
+<section class="slide center section">
+  <svg class="ic"><use href="#i-bulb"/></svg>
+  <div class="num">PART 03</div>
+  <h1>結束課程後，<br>還有哪些機會等著你</h1>
+</section>
+
+<!-- P24 開發案源方法 -->
+<section class="slide center" data-steps="5">
+  <div class="eyebrow">03 結束課程後的機會</div>
+  <h2>我試過的開發案源方法</h2>
+  <div class="rows hl-group">
+    <div class="row" data-hl="1"><span class="n">01</span><h3>開發信、私訊</h3><p>看不到客戶現在用的系統，很難直接點出痛點</p></div>
+    <div class="row" data-hl="2"><span class="n">02</span><h3>社群貼文</h3><p>看到的人和轉化不可控，要系列規劃、持續更新</p></div>
+    <div class="row" data-hl="3"><span class="n">03</span><h3>製作 Demo</h3><p>容易吸引只是看看的人，但依領域可能有意外效果</p></div>
+    <div class="row" data-hl="4"><span class="n">04</span><h3>面試 <span class="muted" style="font-weight:400;font-size:24px">沒在開玩笑 XD</span></h3><p>直接問對方有沒有需要 Notion 系統或架設網站</p></div>
+    <div class="row" data-hl="5"><span class="n">05</span><h3>官網 SEO</h3><p>長期持續的被動開發，但需要蠻長的時間</p></div>
+  </div>
+</section>
+
+<!-- P25 案子以外的機會 -->
+<section class="slide center" data-steps="1">
+  <div class="eyebrow">03 結束課程後的機會</div>
+  <h2>案子以外，也有很多機會</h2>
+  <div class="grid4">
+    <div class="tile"><span class="mono muted">01</span><div><h3>設計模板</h3><p>課程內有講到</p></div></div>
+    <div class="tile"><span class="mono muted">02</span><div><h3>客製化系統</h3><p>深入研究各種不同的系統</p></div></div>
+    <div class="tile"><span class="mono muted">03</span><div><h3>開發小工具</h3><p>之類的項目</p></div></div>
+    <div class="tile" data-in="1" style="background:var(--ink);color:#fff"><span class="mono" style="color:rgba(255,255,255,.5)">意外收穫</span><div><h3 style="color:#fff">政府講師</h3><p style="color:rgba(255,255,255,.7)">明年可能有機會開課！</p></div></div>
+  </div>
+</section>
+
+<!-- P26 關鍵 -->
+<section class="slide center">
+  <div class="eyebrow">03 結束課程後的機會<span class="sep"></span>機會真的很多，我覺得關鍵是</div>
+  <div class="chain" style="margin-top:0">
+    <span class="pill">不斷吸收新的資訊</span><span class="arr">×</span>
+    <span class="pill">與現有的技能融合</span>
+  </div>
+  <div class="quote" style="margin-top:64px;font-size:76px">看哪邊可以延伸、<br>創造價值</div>
+</section>
+
+<!-- P27 謝謝 -->
+<section class="slide center">
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:80px;align-items:center">
+    <div>
+      <svg class="ic" style="width:72px;height:72px;margin-bottom:36px"><use href="#i-chat"/></svg>
+      <h1>謝謝大家</h1>
+      <p style="margin-top:28px">有沒有問題想要問我 XD</p>
+      <button class="home" data-home>↺ 回到首頁</button>
+    </div>
+    <div class="ph qr" data-img="img/qr.png"><b>QR Code</b><span class="small">放 img/qr.png</span></div>
+  </div>
+</section>
+
+<div id="progress"></div>
+<div id="counter"></div>
+</div>
+<div id="hint">點擊 / 滾輪 / → 下一步　← 上一步　F 全螢幕　Home 回首頁</div>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  const prog = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  let si = 0, st = 0;
+
+  // 有圖檔就自動換掉佔位框
+  document.querySelectorAll('[data-img]').forEach(el => {
+    const img = new Image();
+    img.onload = () => { el.innerHTML = ''; el.style.border = 'none'; el.style.padding = 0;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:inherit'; el.appendChild(img); };
+    img.src = el.dataset.img;
+  });
+
+  // 瀑布流：依 data-covers 建立錯落直欄（封面保持原比例，不裁切）
+  const mz = document.getElementById('masonry');
+  if (mz) {
+    const n = +mz.dataset.cols, cols = [];
+    for (let i = 0; i < n; i++) { const c = document.createElement('div'); c.className = 'col'; mz.appendChild(c); cols.push(c); }
+    mz.dataset.covers.split(',').forEach((item, i) => {
+      const [id, cat] = item.split(':');
+      const fig = document.createElement('figure');
+      fig.dataset.hl = cat;
+      fig.innerHTML = `<img src="img/${id}.jpg" alt="">`;
+      cols[i % n].appendChild(fig);
+    });
+  }
+
+  function fit() {
+    const s = Math.min(innerWidth / 1600, innerHeight / 900);
+    stage.style.transform = `translate(-50%,-50%) scale(${s})`;
+  }
+
+  function render() {
+    slides.forEach((s, i) => s.classList.toggle('on', i === si));
+    const s = slides[si];
+    s.querySelectorAll('[data-in]').forEach(el => el.classList.toggle('shown', st >= +el.dataset.in));
+    s.querySelectorAll('.hl-group').forEach(g => {
+      let any = false;
+      g.querySelectorAll('[data-hl]').forEach(el => {
+        const lit = el.dataset.hl.split(',').map(Number).includes(st);
+        el.classList.toggle('lit', lit); any = any || lit;
+      });
+      g.classList.toggle('focusing', any);
+    });
+    prog.style.width = ((si + 1) / slides.length * 100) + '%';
+    counter.innerHTML = 'P' + String(si + 1).padStart(2, '0') + '<span class="t"> / ' + slides.length + '</span>';
+    counter.classList.toggle('dark', s.classList.contains('section'));
+    location.hash = si + 1;
+  }
+
+  const steps = i => +(slides[i].dataset.steps || 0);
+  function next() {
+    if (st < steps(si)) st++;
+    else if (si < slides.length - 1) { si++; st = 0; }
+    render();
+  }
+  function prev() {
+    if (st > 0) st--;
+    else if (si > 0) { si--; st = steps(si); }
+    render();
+  }
+  function goHome() { si = 0; st = 0; render(); }
+
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'].includes(e.key)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') goHome();
+    else if (e.key === 'End') { si = slides.length - 1; st = 0; render(); }
+    else if (e.key === 'f' || e.key === 'F') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', e => {
+    if (e.target.closest('[data-home]')) return goHome();
+    e.clientX < innerWidth * 0.2 ? prev() : next();
+  });
+  addEventListener('contextmenu', e => { e.preventDefault(); prev(); });
+  // 滾輪上下頁（觸控板一次滑動只算一步）
+  let wheelLock = 0;
+  addEventListener('wheel', e => {
+    e.preventDefault();
+    const now = Date.now();
+    if (Math.abs(e.deltaY) < 8 || now < wheelLock) return;
+    wheelLock = now + 650;
+    e.deltaY > 0 ? next() : prev();
+  }, { passive: false });
+  addEventListener('resize', fit);
+
+  const h = parseInt(location.hash.slice(1));
+  if (h >= 1 && h <= slides.length) si = h - 1;
+  fit(); render();
+  setTimeout(() => document.getElementById('hint').style.opacity = 0, 4000);
+})();
+</script>
+</body>
+</html>
