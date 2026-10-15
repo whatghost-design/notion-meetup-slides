@@ -91,7 +91,7 @@ b,strong{color:var(--ink);font-weight:700}
 .vtl.focusing .it.lit .dot{background:var(--ink);border-color:var(--ink);transform:scale(1.25)}
 .social-pop .topics{margin-top:24px;align-items:center}
 .social-pop .topics span{font-size:24px;padding:12px 26px}
-.social-pop .topics .handle{background:none;font-family:var(--mono);font-weight:400;font-size:22px;color:var(--ink-2);margin:0;padding:0 0 0 8px}
+.social-pop .ig{margin-top:14px;font-family:var(--mono);font-size:22px;color:var(--ink-2)}
 
 /* 依步驟切換的圖片面板（data-at = 在哪幾步顯示） */
 .swap{position:relative}
@@ -284,8 +284,8 @@ b,strong{color:var(--ink);font-weight:700}
   </div>
 </section>
 
-<!-- P2 自我介紹：三階段依序亮起，經營什麼鬼設計時浮出社群 -->
-<section class="slide center" data-steps="3">
+<!-- P2 自我介紹：進頁就亮第一階段，經營什麼鬼設計時浮出社群 -->
+<section class="slide center" data-steps="3" data-start="1">
   <div class="intro2">
     <div>
       <div class="eyebrow">自我介紹</div>
@@ -297,10 +297,11 @@ b,strong{color:var(--ink);font-weight:700}
       </div>
     </div>
     <div class="swap" style="height:620px">
-      <div data-at="0,1"><div class="ph" data-img="img/design.png"><b>平面設計作品</b>以前做過的設計<br><span class="small">放 img/design.png 會自動換上</span></div></div>
+      <div data-at="1"><div class="ph" data-img="img/design.png"><b>平面設計作品</b>以前做過的設計<br><span class="small">放 img/design.png 會自動換上</span></div></div>
       <div class="social-pop" data-at="2,3">
         <div class="ph" data-img="img/social.png"><b>社群截圖</b>IG / Threads 個人頁<br><span class="small">放 img/social.png 會自動換上</span></div>
-        <div class="topics"><span>Notion</span><span>生產力</span><span>設計</span><span class="handle">@whatghost_design</span></div>
+        <div class="topics"><span>Notion</span><span>生產力</span><span>設計</span></div>
+        <div class="ig">@whatghost_design</div>
       </div>
     </div>
   </div>
@@ -325,9 +326,9 @@ b,strong{color:var(--ink);font-weight:700}
 </section>
 
 <!-- P6 從執著 Notion 到提取思維 -->
-<section class="slide center" data-steps="3">
+<section class="slide center" data-steps="3" data-start="1">
   <div class="eyebrow">01 Notion 只是工具</div>
-  <h2>剛開始經營自媒體，<br>我很執著用 Notion 解決問題</h2>
+  <h2>剛開始，我很執著用 Notion 解決問題</h2>
   <div class="steps hl-group">
     <div class="step" data-hl="1"><div class="dot"></div><h3>什麼都用 Notion</h3><p>模板、工具都圍繞 Notion<br>一開始很有成就感</p></div>
     <div class="step" data-hl="2"><div class="dot"></div><h3>AI 越來越強</h3><p>Notion 不是最佳解<br>再執著下去會被綁架</p></div>
@@ -536,8 +537,8 @@ b,strong{color:var(--ink);font-weight:700}
   <div class="quote" data-in="1" style="margin-top:80px;font-size:64px">但機會不會自己找上門</div>
 </section>
 
-<!-- P22 你可以利用自媒體 -->
-<section class="slide center" data-steps="4">
+<!-- P21 你可以利用自媒體 -->
+<section class="slide center" data-steps="4" data-start="1">
   <div class="eyebrow">02 經營自媒體<span class="sep"></span>好處 03 開發各種機會</div>
   <h2>你可以利用自媒體</h2>
   <div class="use">
@@ -548,7 +549,7 @@ b,strong{color:var(--ink);font-weight:700}
       <div class="u" data-hl="4"><span class="n">04</span><div><h3>參加實體聚會</h3><p>線上建立好感，線下建立信任</p></div></div>
     </div>
     <div class="swap" style="height:560px">
-      <div data-at="0,1"><div class="ph" data-img="img/use-1.png"><b>案例／客戶回饋</b>例如客戶回饋截圖、做過的案子<br><span class="small">img/use-1.png</span></div></div>
+      <div data-at="1"><div class="ph" data-img="img/use-1.png"><b>案例／客戶回饋</b>例如客戶回饋截圖、做過的案子<br><span class="small">img/use-1.png</span></div></div>
       <div data-at="2"><div class="ph" data-img="img/use-2.png"><b>自己做的產品</b>例如 Gumroad 模板商品頁<br><span class="small">img/use-2.png</span></div></div>
       <div data-at="3"><div class="ph" data-img="img/use-3.png"><b>服務說明</b>例如官網服務頁面<br><span class="small">img/use-3.png</span></div></div>
       <div data-at="4"><div class="ph" data-img="img/use-4.png"><b>實體聚會</b>例如聚會現場照片<br><span class="small">img/use-4.png</span></div></div>
@@ -671,23 +672,24 @@ b,strong{color:var(--ink);font-weight:700}
   }
 
   const steps = i => +(slides[i].dataset.steps || 0);
+  const start = i => +(slides[i].dataset.start || 0);
   function next() {
     if (st < steps(si)) st++;
-    else if (si < slides.length - 1) { si++; st = 0; }
+    else if (si < slides.length - 1) { si++; st = start(si); }
     render();
   }
   function prev() {
-    if (st > 0) st--;
+    if (st > start(si)) st--;
     else if (si > 0) { si--; st = steps(si); }
     render();
   }
-  function goHome() { si = 0; st = 0; render(); }
+  function goHome() { si = 0; st = start(0); render(); }
 
   addEventListener('keydown', e => {
     if (['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'].includes(e.key)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
     else if (e.key === 'Home') goHome();
-    else if (e.key === 'End') { si = slides.length - 1; st = 0; render(); }
+    else if (e.key === 'End') { si = slides.length - 1; st = start(si); render(); }
     else if (e.key === 'f' || e.key === 'F') {
       document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
     }
@@ -710,6 +712,7 @@ b,strong{color:var(--ink);font-weight:700}
 
   const h = parseInt(location.hash.slice(1));
   if (h >= 1 && h <= slides.length) si = h - 1;
+  st = start(si);
   fit(); render();
   setTimeout(() => document.getElementById('hint').style.opacity = 0, 4000);
 })();
