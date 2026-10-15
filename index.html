@@ -84,14 +84,14 @@ b,strong{color:var(--ink);font-weight:700}
 .vtl::before{content:"";position:absolute;left:11px;top:20px;bottom:20px;width:2px;background:var(--line)}
 .vtl .it{display:flex;gap:32px;align-items:flex-start;padding:18px 0;position:relative}
 .vtl .dot{width:24px;height:24px;border-radius:50%;background:var(--bg);border:2px solid var(--ink-3);margin-top:6px;flex-shrink:0;transition:all .45s var(--ease)}
-.vtl .k{font-family:var(--mono);font-size:20px;color:var(--ink-3);letter-spacing:.06em}
+.vtl .k{font-size:20px;color:var(--ink-3);letter-spacing:.04em}
 .vtl h3{font-size:42px;margin-top:4px}
 .vtl p{font-size:24px;color:var(--ink-3);margin-top:4px}
 .vtl.focusing .it:not(.lit){opacity:.25}
 .vtl.focusing .it.lit .dot{background:var(--ink);border-color:var(--ink);transform:scale(1.25)}
 .social-pop .topics{margin-top:24px;align-items:center}
 .social-pop .topics span{font-size:24px;padding:12px 26px}
-.social-pop .ig{margin-top:14px;font-family:var(--mono);font-size:22px;color:var(--ink-2)}
+.social-pop .ig{margin-top:14px;font-family:var(--sans);font-weight:500;font-size:24px;color:var(--ink-2)}
 
 /* 依步驟切換的圖片面板（data-at = 在哪幾步顯示） */
 .swap{position:relative}
@@ -377,7 +377,7 @@ b,strong{color:var(--ink);font-weight:700}
 </section>
 
 <!-- P10 把能力應用在其他地方 -->
-<section class="slide center" data-steps="2">
+<section class="slide center" data-steps="1">
   <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立流程的能力</div>
   <div style="display:grid;grid-template-columns:1fr 540px;gap:64px;align-items:center">
     <div>
@@ -385,9 +385,9 @@ b,strong{color:var(--ink);font-weight:700}
       <div class="rows" style="margin-top:36px">
         <div class="row" style="grid-template-columns:96px 1fr"><span class="n">公司</span><div><h3>報價系統流程</h3><div class="hint" style="margin-top:4px">減少老闆與客戶反覆溝通</div></div></div>
         <div class="row" style="grid-template-columns:96px 1fr"><span class="n">公司</span><div><h3>勘驗流程</h3><div class="hint" style="margin-top:4px">含收費、後續追蹤</div></div></div>
-        <div class="row" data-in="1" style="grid-template-columns:96px 1fr"><span class="n">離職後</span><div><h3>我的接案流程、內容瀑布流程</h3></div></div>
+        <div class="row" style="grid-template-columns:96px 1fr"><span class="n">離職後</span><div><h3>我的接案流程、內容瀑布流程</h3></div></div>
       </div>
-      <div class="callout" data-in="2">不用犧牲品質，用更少的時間完成更多事情</div>
+      <div class="callout" data-in="1">不用犧牲品質，用更少的時間完成更多事情</div>
     </div>
     <div class="ph" data-img="img/flow.png" style="height:540px"><b>圖片建議</b>Notion 貼文流程資料庫<br>或報價系統截圖<br><span class="small">放 img/flow.png 會自動換上</span></div>
   </div>
