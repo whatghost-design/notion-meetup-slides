@@ -106,6 +106,9 @@ b,strong{color:var(--ink);font-weight:700}
 .ulist .u .n{font-family:var(--mono);font-size:20px;color:var(--ink-3);padding-top:8px}
 .ulist .u h3{font-size:32px}
 .ulist .u p{font-size:22px;margin-top:4px}
+.ulist.tight .u{padding:14px 0}
+.ulist.tight .u h3{font-size:28px}
+.ulist.tight .u p{font-size:20px}
 
 /* 議程方塊 */
 .squares{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:20px}
@@ -563,16 +566,25 @@ b,strong{color:var(--ink);font-weight:700}
   <h1>結束課程後，<br>還有哪些機會等著你</h1>
 </section>
 
-<!-- P23 開發案源方法 -->
-<section class="slide center">
+<!-- P23 開發案源方法：進頁亮第一個，每個方法配一張圖 -->
+<section class="slide center" data-steps="5" data-start="1">
   <div class="eyebrow">03 結束課程後的機會</div>
   <h2>我試過的開發案源方法</h2>
-  <div class="rows">
-    <div class="row"><span class="n">01</span><h3>開發信、私訊</h3><p>看不到客戶現在用的系統，很難直接點出痛點</p></div>
-    <div class="row"><span class="n">02</span><h3>社群貼文</h3><p>看到的人和轉化不可控，要系列規劃、持續更新</p></div>
-    <div class="row"><span class="n">03</span><h3>製作 Demo</h3><p>容易吸引只是看看的人，但依領域可能有意外效果</p></div>
-    <div class="row"><span class="n">04</span><h3>面試 <span class="muted" style="font-weight:400;font-size:24px">沒在開玩笑 XD</span></h3><p>直接問對方有沒有需要 Notion 系統或架設網站</p></div>
-    <div class="row"><span class="n">05</span><h3>官網 SEO</h3><p>長期持續的被動開發，但需要蠻長的時間</p></div>
+  <div class="use" style="margin-top:28px">
+    <div class="ulist tight hl-group">
+      <div class="u" data-hl="1"><span class="n">01</span><div><h3>開發信、私訊</h3><p>看不到客戶現在用的系統，很難直接點出痛點</p></div></div>
+      <div class="u" data-hl="2"><span class="n">02</span><div><h3>社群貼文</h3><p>看到的人和轉化不可控，要系列規劃、持續更新</p></div></div>
+      <div class="u" data-hl="3"><span class="n">03</span><div><h3>製作 Demo</h3><p>容易吸引只是看看的人，但依領域可能有意外效果</p></div></div>
+      <div class="u" data-hl="4"><span class="n">04</span><div><h3>面試 <span class="muted" style="font-weight:400;font-size:22px">沒在開玩笑 XD</span></h3><p>直接問對方有沒有需要 Notion 系統或架設網站</p></div></div>
+      <div class="u" data-hl="5"><span class="n">05</span><div><h3>官網 SEO</h3><p>長期持續的被動開發，但需要蠻長的時間</p></div></div>
+    </div>
+    <div class="swap" style="height:540px">
+      <div data-at="1"><div class="ph" data-img="img/lead-1.png"><b>開發信／私訊</b>例如寄出的開發信畫面<br><span class="small">img/lead-1.png</span></div></div>
+      <div data-at="2"><div class="ph" data-img="img/lead-2.png"><b>社群貼文</b>例如帶來詢問的那篇貼文<br><span class="small">img/lead-2.png</span></div></div>
+      <div data-at="3"><div class="ph" data-img="img/lead-3.png"><b>Demo</b>例如做過的 Demo 畫面<br><span class="small">img/lead-3.png</span></div></div>
+      <div data-at="4"><div class="ph" data-img="img/lead-4.png"><b>面試</b>例如作品集或面試時展示的東西<br><span class="small">img/lead-4.png</span></div></div>
+      <div data-at="5"><div class="ph" data-img="img/lead-5.png"><b>官網 SEO</b>例如官網文章或搜尋結果截圖<br><span class="small">img/lead-5.png</span></div></div>
+    </div>
   </div>
 </section>
 
