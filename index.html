@@ -93,6 +93,20 @@ b,strong{color:var(--ink);font-weight:700}
 .social-pop .topics span{font-size:24px;padding:12px 26px}
 .social-pop .topics .handle{background:none;font-family:var(--mono);font-weight:400;font-size:22px;color:var(--ink-2);margin:0;padding:0 0 0 8px}
 
+/* 依步驟切換的圖片面板（data-at = 在哪幾步顯示） */
+.swap{position:relative}
+.swap>[data-at]{position:absolute;inset:0;display:flex;flex-direction:column}
+[data-at]{opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease);pointer-events:none}
+[data-at].shown{opacity:1;transform:none}
+.swap .ph{flex:1}
+/* 利用自媒體：左清單＋右圖 */
+.use{display:grid;grid-template-columns:1fr 640px;gap:64px;align-items:center;margin-top:36px}
+.ulist{display:grid;border-top:2px solid var(--line)}
+.ulist .u{display:grid;grid-template-columns:56px 1fr;gap:16px;padding:22px 0;border-bottom:2px solid var(--line)}
+.ulist .u .n{font-family:var(--mono);font-size:20px;color:var(--ink-3);padding-top:8px}
+.ulist .u h3{font-size:32px}
+.ulist .u p{font-size:22px;margin-top:4px}
+
 /* 議程方塊 */
 .squares{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:20px}
 .sq{aspect-ratio:1/1;max-height:380px;border-radius:28px;background:var(--soft);padding:40px;display:flex;flex-direction:column;justify-content:space-between}
@@ -282,9 +296,12 @@ b,strong{color:var(--ink);font-weight:700}
         <div class="it" data-hl="3"><div class="dot"></div><div><div class="k">今年 2 月</div><h3>參加接案實戰班</h3><p>第二屆學員</p></div></div>
       </div>
     </div>
-    <div class="social-pop" data-in="2">
-      <div class="ph" data-img="img/social.png" style="height:520px"><b>社群截圖</b>IG / Threads 個人頁<br><span class="small">放 img/social.png 會自動換上</span></div>
-      <div class="topics"><span>Notion</span><span>生產力</span><span>設計</span><span class="handle">@whatghost_design</span></div>
+    <div class="swap" style="height:620px">
+      <div data-at="0,1"><div class="ph" data-img="img/design.png"><b>平面設計作品</b>以前做過的設計<br><span class="small">放 img/design.png 會自動換上</span></div></div>
+      <div class="social-pop" data-at="2,3">
+        <div class="ph" data-img="img/social.png"><b>社群截圖</b>IG / Threads 個人頁<br><span class="small">放 img/social.png 會自動換上</span></div>
+        <div class="topics"><span>Notion</span><span>生產力</span><span>設計</span><span class="handle">@whatghost_design</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -458,13 +475,13 @@ b,strong{color:var(--ink);font-weight:700}
   <p class="lead" data-in="1" style="margin-top:56px">要關注的是：<b>就算沒有流量，也能拿到的好處</b></p>
 </section>
 
-<!-- P18 三個好處 -->
-<section class="slide center" data-steps="3">
+<!-- P17 三個好處（後面逐一展開，這裡不分別突出） -->
+<section class="slide center">
   <div class="eyebrow">02 經營自媒體<span class="sep"></span>就算沒有流量，也有這 3 個好處</div>
-  <div class="squares hl-group">
-    <div class="sq" data-hl="1"><span class="n">01</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-book"/></svg><h3>學得更快<br>紀錄進度</h3></div></div>
-    <div class="sq" data-hl="2"><span class="n">02</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-suitcase"/></svg><h3>好找工作</h3></div></div>
-    <div class="sq" data-hl="3"><span class="n">03</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-key"/></svg><h3>開發各種機會</h3></div></div>
+  <div class="squares">
+    <div class="sq"><span class="n">01</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-book"/></svg><h3>學得更快<br>紀錄進度</h3></div></div>
+    <div class="sq"><span class="n">02</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-suitcase"/></svg><h3>好找工作</h3></div></div>
+    <div class="sq"><span class="n">03</span><div><svg class="ic" style="margin-bottom:24px"><use href="#i-key"/></svg><h3>開發各種機會</h3></div></div>
   </div>
 </section>
 
@@ -523,11 +540,19 @@ b,strong{color:var(--ink);font-weight:700}
 <section class="slide center" data-steps="4">
   <div class="eyebrow">02 經營自媒體<span class="sep"></span>好處 03 開發各種機會</div>
   <h2>你可以利用自媒體</h2>
-  <div class="grid4 hl-group">
-    <div class="tile" data-hl="1"><span class="mono muted">01</span><div><h3>公開工作成果<br>和真實回饋</h3><p>讓真實回饋說服有需要的人</p></div></div>
-    <div class="tile" data-hl="2"><span class="mono muted">02</span><div><h3>展示自己<br>做的產品</h3><p>模板、工具、課程，讓人一看就想買</p></div></div>
-    <div class="tile" data-hl="3"><span class="mono muted">03</span><div><h3>把服務<br>講清楚</h3><p>大方說出你有接哪些案子</p></div></div>
-    <div class="tile" data-hl="4"><span class="mono muted">04</span><div><h3>參加<br>實體聚會</h3><p>線上建立好感，線下建立信任</p></div></div>
+  <div class="use">
+    <div class="ulist hl-group">
+      <div class="u" data-hl="1"><span class="n">01</span><div><h3>公開工作成果和真實回饋</h3><p>讓真實回饋說服有需要的人</p></div></div>
+      <div class="u" data-hl="2"><span class="n">02</span><div><h3>展示自己做的產品</h3><p>模板、工具、課程，讓人一看就想買</p></div></div>
+      <div class="u" data-hl="3"><span class="n">03</span><div><h3>把服務講清楚</h3><p>大方說出你有接哪些案子</p></div></div>
+      <div class="u" data-hl="4"><span class="n">04</span><div><h3>參加實體聚會</h3><p>線上建立好感，線下建立信任</p></div></div>
+    </div>
+    <div class="swap" style="height:560px">
+      <div data-at="0,1"><div class="ph" data-img="img/use-1.png"><b>案例／客戶回饋</b>例如客戶回饋截圖、做過的案子<br><span class="small">img/use-1.png</span></div></div>
+      <div data-at="2"><div class="ph" data-img="img/use-2.png"><b>自己做的產品</b>例如 Gumroad 模板商品頁<br><span class="small">img/use-2.png</span></div></div>
+      <div data-at="3"><div class="ph" data-img="img/use-3.png"><b>服務說明</b>例如官網服務頁面<br><span class="small">img/use-3.png</span></div></div>
+      <div data-at="4"><div class="ph" data-img="img/use-4.png"><b>實體聚會</b>例如聚會現場照片<br><span class="small">img/use-4.png</span></div></div>
+    </div>
   </div>
 </section>
 
@@ -538,16 +563,16 @@ b,strong{color:var(--ink);font-weight:700}
   <h1>結束課程後，<br>還有哪些機會等著你</h1>
 </section>
 
-<!-- P24 開發案源方法 -->
-<section class="slide center" data-steps="5">
+<!-- P23 開發案源方法 -->
+<section class="slide center">
   <div class="eyebrow">03 結束課程後的機會</div>
   <h2>我試過的開發案源方法</h2>
-  <div class="rows hl-group">
-    <div class="row" data-hl="1"><span class="n">01</span><h3>開發信、私訊</h3><p>看不到客戶現在用的系統，很難直接點出痛點</p></div>
-    <div class="row" data-hl="2"><span class="n">02</span><h3>社群貼文</h3><p>看到的人和轉化不可控，要系列規劃、持續更新</p></div>
-    <div class="row" data-hl="3"><span class="n">03</span><h3>製作 Demo</h3><p>容易吸引只是看看的人，但依領域可能有意外效果</p></div>
-    <div class="row" data-hl="4"><span class="n">04</span><h3>面試 <span class="muted" style="font-weight:400;font-size:24px">沒在開玩笑 XD</span></h3><p>直接問對方有沒有需要 Notion 系統或架設網站</p></div>
-    <div class="row" data-hl="5"><span class="n">05</span><h3>官網 SEO</h3><p>長期持續的被動開發，但需要蠻長的時間</p></div>
+  <div class="rows">
+    <div class="row"><span class="n">01</span><h3>開發信、私訊</h3><p>看不到客戶現在用的系統，很難直接點出痛點</p></div>
+    <div class="row"><span class="n">02</span><h3>社群貼文</h3><p>看到的人和轉化不可控，要系列規劃、持續更新</p></div>
+    <div class="row"><span class="n">03</span><h3>製作 Demo</h3><p>容易吸引只是看看的人，但依領域可能有意外效果</p></div>
+    <div class="row"><span class="n">04</span><h3>面試 <span class="muted" style="font-weight:400;font-size:24px">沒在開玩笑 XD</span></h3><p>直接問對方有沒有需要 Notion 系統或架設網站</p></div>
+    <div class="row"><span class="n">05</span><h3>官網 SEO</h3><p>長期持續的被動開發，但需要蠻長的時間</p></div>
   </div>
 </section>
 
@@ -557,7 +582,7 @@ b,strong{color:var(--ink);font-weight:700}
   <h2>案子以外，也有很多機會</h2>
   <div class="grid4">
     <div class="tile"><span class="mono muted">01</span><div><h3>設計模板</h3><p>課程內有講到</p></div></div>
-    <div class="tile"><span class="mono muted">02</span><div><h3>客製化系統</h3><p>深入研究各種不同的系統</p></div></div>
+    <div class="tile"><span class="mono muted">02</span><div><h3>客製化系統</h3><p>（非 Notion）深入研究各種不同的系統</p></div></div>
     <div class="tile"><span class="mono muted">03</span><div><h3>開發小工具</h3><p>之類的項目</p></div></div>
     <div class="tile" data-in="1" style="background:var(--ink);color:#fff"><span class="mono" style="color:rgba(255,255,255,.5)">意外收穫</span><div><h3 style="color:#fff">政府講師</h3><p style="color:rgba(255,255,255,.7)">明年可能有機會開課！</p></div></div>
   </div>
@@ -566,11 +591,11 @@ b,strong{color:var(--ink);font-weight:700}
 <!-- P26 關鍵 -->
 <section class="slide center">
   <div class="eyebrow">03 結束課程後的機會<span class="sep"></span>機會真的很多，我覺得關鍵是</div>
-  <div class="chain" style="margin-top:0">
+  <div class="quote" style="font-size:76px">看哪邊可以延伸、<br>創造價值</div>
+  <div class="chain" style="margin-top:56px">
     <span class="pill">不斷吸收新的資訊</span><span class="arr">×</span>
     <span class="pill">與現有的技能融合</span>
   </div>
-  <div class="quote" style="margin-top:64px;font-size:76px">看哪邊可以延伸、<br>創造價值</div>
 </section>
 
 <!-- P27 謝謝 -->
@@ -579,7 +604,7 @@ b,strong{color:var(--ink);font-weight:700}
     <div>
       <svg class="ic" style="width:72px;height:72px;margin-bottom:36px"><use href="#i-chat"/></svg>
       <h1>謝謝大家</h1>
-      <p style="margin-top:28px">有沒有問題想要問我 XD</p>
+      <p style="margin-top:28px">歡迎提問</p>
       <button class="home" data-home>↺ 回到首頁</button>
     </div>
     <div class="ph qr" data-img="img/qr.png"><b>QR Code</b><span class="small">放 img/qr.png</span></div>
@@ -630,6 +655,7 @@ b,strong{color:var(--ink);font-weight:700}
     slides.forEach((s, i) => s.classList.toggle('on', i === si));
     const s = slides[si];
     s.querySelectorAll('[data-in]').forEach(el => el.classList.toggle('shown', st >= +el.dataset.in));
+    s.querySelectorAll('[data-at]').forEach(el => el.classList.toggle('shown', el.dataset.at.split(',').map(Number).includes(st)));
     s.querySelectorAll('.hl-group').forEach(g => {
       let any = false;
       g.querySelectorAll('[data-hl]').forEach(el => {
