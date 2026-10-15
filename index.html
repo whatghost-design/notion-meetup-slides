@@ -223,6 +223,11 @@ b,strong{color:var(--ink);font-weight:700}
 .headline .eyebrow{margin-bottom:12px}
 .headline h2{font-size:72px;line-height:1.1}
 
+/* 好處頁：標題固定在同一位置，內容在下方區域置中 */
+.slide.fixed{padding-top:110px}
+.fbody{flex:1;display:flex;flex-direction:column;justify-content:center;padding-top:36px}
+.fbody>:first-child{margin-top:0!important}
+
 /* 大標語 */
 .quote{font-size:84px;font-weight:900;line-height:1.25}
 
@@ -489,54 +494,60 @@ b,strong{color:var(--ink);font-weight:700}
 </section>
 
 <!-- P19 好處 1 -->
-<section class="slide center" data-steps="2">
+<section class="slide fixed" data-steps="2">
   <div class="headline">
     <span class="bn">01</span>
     <div><div class="eyebrow">02 經營自媒體<span class="sep"></span>好處</div><h2>學得更快、紀錄進度</h2></div>
   </div>
-  <div class="chain" style="margin-top:56px">
-    <span class="pill">費曼學習法</span><span class="arr">＝</span>
-    <span class="pill">用教學的方式輸出</span><span class="arr">→</span>
-    <span class="pill dark">學得更快</span>
-  </div>
-  <div class="vs" style="margin-top:44px">
-    <div class="card" data-in="1"><div class="tag">我的狀況</div><ul><li>思考時想法很容易跳躍</li><li>學知識、看書常分心、忘記</li></ul></div>
-    <div class="card dark" data-in="2"><div class="tag">把它做成內容之後</div><ul><li>重新釐清梳理、加深印象</li><li>記錄學習歷程與想法</li></ul></div>
+  <div class="fbody">
+    <div class="chain" style="margin-top:56px">
+      <span class="pill">費曼學習法</span><span class="arr">＝</span>
+      <span class="pill">用教學的方式輸出</span><span class="arr">→</span>
+      <span class="pill dark">學得更快</span>
+    </div>
+    <div class="vs" style="margin-top:44px">
+      <div class="card" data-in="1"><div class="tag">我的狀況</div><ul><li>思考時想法很容易跳躍</li><li>學知識、看書常分心、忘記</li></ul></div>
+      <div class="card dark" data-in="2"><div class="tag">把它做成內容之後</div><ul><li>重新釐清梳理、加深印象</li><li>記錄學習歷程與想法</li></ul></div>
+    </div>
   </div>
 </section>
 
 <!-- P20 好處 2 -->
-<section class="slide center" data-steps="1">
+<section class="slide fixed" data-steps="1">
   <div class="headline">
     <span class="bn">02</span>
     <div><div class="eyebrow">02 經營自媒體<span class="sep"></span>好處</div><h2>好找工作</h2></div>
   </div>
-  <p class="lead" style="margin-top:28px">面試時一講到有經營自媒體，對方都眼前一亮</p>
-  <div class="grid7">
-    <div class="tile eq"><h3>經營自媒體 ＝</h3></div>
-    <div class="tile"><h3>自我管控</h3><p>會自己找事情做</p></div>
-    <div class="tile"><h3>內容企劃</h3><p>知道受眾是誰、想看什麼</p></div>
-    <div class="tile"><h3>設計能力</h3><p>貼文、銷售頁</p></div>
-    <div class="tile"><h3>行銷能力</h3><p>會做貼文、打廣告</p></div>
-    <div class="tile"><h3>工具能力</h3><p>自然會接觸到各種工具</p></div>
-    <div class="tile"><h3>抗壓、不怕被看</h3><p>作品公開，習慣回饋和負評</p></div>
-    <div class="tile"><h3>對趨勢敏感</h3><p>知道流行什麼、大家在討論什麼</p></div>
+  <div class="fbody">
+    <p class="lead" style="margin-top:28px">面試時一講到有經營自媒體，對方都眼前一亮</p>
+    <div class="grid7">
+      <div class="tile eq"><h3>經營自媒體 ＝</h3></div>
+      <div class="tile"><h3>自我管控</h3><p>會自己找事情做</p></div>
+      <div class="tile"><h3>內容企劃</h3><p>知道受眾是誰、想看什麼</p></div>
+      <div class="tile"><h3>設計能力</h3><p>貼文、銷售頁</p></div>
+      <div class="tile"><h3>行銷能力</h3><p>會做貼文、打廣告</p></div>
+      <div class="tile"><h3>工具能力</h3><p>自然會接觸到各種工具</p></div>
+      <div class="tile"><h3>抗壓、不怕被看</h3><p>作品公開，習慣回饋和負評</p></div>
+      <div class="tile"><h3>對趨勢敏感</h3><p>知道流行什麼、大家在討論什麼</p></div>
+    </div>
+    <div class="callout" data-in="1" style="margin-top:28px">粉絲多不多是其次，自媒體代表你有這些真實的經歷</div>
   </div>
-  <div class="callout" data-in="1" style="margin-top:28px">粉絲多不多是其次，自媒體代表你有這些真實的經歷</div>
 </section>
 
 <!-- P21 好處 3 -->
-<section class="slide center" data-steps="1">
+<section class="slide fixed" data-steps="1">
   <div class="headline">
     <span class="bn">03</span>
     <div><div class="eyebrow">02 經營自媒體<span class="sep"></span>好處</div><h2>開發各種機會</h2></div>
   </div>
-  <div class="chain" style="margin-top:56px">
-    <span class="pill">累積信任感</span><span class="arr">→</span>
-    <span class="pill">認識前輩、專家、觀眾</span><span class="arr">→</span>
-    <span class="pill dark">下一個機會的來源</span>
+  <div class="fbody">
+    <div class="chain" style="margin-top:56px">
+      <span class="pill">累積信任感</span><span class="arr">→</span>
+      <span class="pill">認識前輩、專家、觀眾</span><span class="arr">→</span>
+      <span class="pill dark">下一個機會的來源</span>
+    </div>
+    <div class="quote" data-in="1" style="margin-top:80px;font-size:64px">但機會不會自己找上門</div>
   </div>
-  <div class="quote" data-in="1" style="margin-top:80px;font-size:64px">但機會不會自己找上門</div>
 </section>
 
 <!-- P21 你可以利用自媒體 -->
