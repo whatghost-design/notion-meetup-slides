@@ -117,7 +117,12 @@ b,strong{color:var(--ink);font-weight:700}
 .chat{flex:1;background:var(--soft);border-radius:24px;padding:40px 44px;display:flex;flex-direction:column;justify-content:center;gap:18px}
 .chat .who{font-size:18px;color:var(--ink-3);letter-spacing:.06em}
 .chat .b{max-width:86%;font-size:24px;line-height:1.55;padding:18px 24px;border-radius:22px}
-.chat .them{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:6px}
+.chat .msg{display:flex;align-items:flex-end;gap:12px;align-self:flex-start;max-width:92%}
+.chat .msg .b{max-width:none}
+.chat .them{position:relative;background:#fff;border-radius:22px}
+.chat .tail .them{border-top-left-radius:6px}
+.chat .tail .them::before{content:"";position:absolute;left:-10px;top:0;width:18px;height:16px;background:#fff;clip-path:polygon(0 0,100% 0,100% 100%)}
+.chat .time{flex-shrink:0;font-size:16px;color:var(--ink-3);padding-bottom:4px;white-space:nowrap}
 .chat .me{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:6px}
 .chat .them b{font-weight:700}
 /* P9：流程圖橫跨整頁 */
@@ -637,8 +642,8 @@ b,strong{color:var(--ink);font-weight:700}
       <div data-at="2"><div class="ph" data-img="img/lead-2.jpg"></div></div>
       <div data-at="3"><div class="ph" data-img="img/lead-3.jpg"></div></div>
       <div data-at="4"><div class="chat">
-        <div class="b them">我們目前規劃<b>希望透過配合的外包設計人員</b>，協助分擔內部大量的圖文製作需求</div>
-        <div class="b them">目前針對外來團隊的規劃，<b>剛好你是很符合的對象～</b></div>
+        <div class="msg tail"><div class="b them">我們目前規劃<b>希望透過配合的外包設計人員</b>，協助分擔內部大量的圖文製作需求</div><span class="time">下午 2:14</span></div>
+        <div class="msg"><div class="b them">目前針對外來團隊的規劃，<b>剛好你是很符合的對象～</b></div><span class="time">下午 2:15</span></div>
       </div></div>
       <div data-at="5"><div class="ph" data-img="img/lead-5.jpg"></div></div>
     </div>
