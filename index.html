@@ -110,6 +110,33 @@ b,strong{color:var(--ink);font-weight:700}
 .ulist.tight .u h3{font-size:28px}
 .ulist.tight .u p{font-size:20px}
 
+/* 圖片面板：完整顯示不裁切 */
+.swap .ph img,.ph.contain img{object-fit:contain!important}
+.swap .ph.has-img,.ph.contain{background:var(--soft)}
+.collage{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.collage img{display:block;width:100%;height:auto;border-radius:14px}
+.collage .r2{display:flex;gap:12px;align-items:flex-start}
+.collage .r2 img{min-width:0;flex-basis:0}
+.collage .r2 img:first-child{flex-grow:735}
+.collage .r2 img:last-child{flex-grow:1565}
+.sstack{flex:1;position:relative;min-height:0}
+.sstack img{position:absolute;border-radius:14px;border:1px solid var(--line);display:block}
+.sstack .ig{left:0;top:0;width:88%}
+.sstack .th{right:0;bottom:0;width:62%}
+.classpic{flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px}
+.classpic img{width:100%;border-radius:14px;border:1px solid var(--line);display:block}
+.badge{align-self:flex-start;background:var(--ink);color:#fff;font-size:30px;font-weight:700;padding:14px 30px;border-radius:999px}
+.redact{flex:1;position:relative;border-radius:24px;overflow:hidden;background:#2b2b2e}
+.redact img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.redact .quotes{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:48px}
+.redact .quotes p{background:#fff;color:var(--ink);border-radius:18px;padding:22px 28px;font-size:26px;font-weight:700;line-height:1.5}
+.redact .quotes .k{font-size:18px;color:rgba(255,255,255,.7);font-weight:400;background:none;padding:0}
+.next-arrow{display:inline-block;margin-left:28px;color:var(--ink-3);animation:nudge 1.6s var(--ease) infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+.qrbox{display:flex;flex-direction:column;align-items:center;gap:16px}
+.qrbox img{width:280px;height:280px;display:block}
+.qrbox div{font-size:22px;color:var(--ink-2);font-weight:500}
+
 /* 議程方塊 */
 .squares{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:20px}
 .sq{aspect-ratio:1/1;max-height:380px;border-radius:28px;background:var(--soft);padding:40px;display:flex;flex-direction:column;justify-content:space-between}
@@ -284,8 +311,8 @@ b,strong{color:var(--ink);font-weight:700}
   <div class="cover">
     <div>
       <h1>PU.YI</h1>
-      <div class="role">Notion 顧問<span>·</span>模板設計師<span>·</span>網站設計師</div>
-      <div class="meta"><span class="bar"></span>什麼鬼設計　Notion 接案實戰班 實體聚會</div>
+      <div class="role">Notion 顧問<span>·</span>平面設計師<span>·</span>網站設計師</div>
+      <div class="meta"><span class="bar"></span>Notion 接案實戰班 實體聚會</div>
     </div>
     <div class="avatar" data-img="img/avatar.jpg">大頭貼</div>
   </div>
@@ -300,16 +327,17 @@ b,strong{color:var(--ink);font-weight:700}
       <div class="vtl hl-group">
         <div class="it" data-hl="1"><div class="dot"></div><div><div class="k">專業</div><h3>平面設計師</h3></div></div>
         <div class="it" data-hl="2"><div class="dot"></div><div><div class="k">去年 8 月</div><h3>離職，經營什麼鬼設計</h3></div></div>
-        <div class="it" data-hl="3"><div class="dot"></div><div><div class="k">今年 2 月</div><h3>參加接案實戰班</h3><p>第二屆學員</p></div></div>
+        <div class="it" data-hl="3"><div class="dot"></div><div><div class="k">今年 2 月</div><h3>參加接案實戰班</h3><p>第二屆學員 · 6/4 完課</p></div></div>
       </div>
     </div>
     <div class="swap" style="height:620px">
-      <div data-at="1"><div class="ph" data-img="img/design.png"><b>平面設計作品</b>以前做過的設計<br><span class="small">放 img/design.png 會自動換上</span></div></div>
-      <div class="social-pop" data-at="2,3">
-        <div class="ph" data-img="img/social.png"><b>社群截圖</b>IG / Threads 個人頁<br><span class="small">放 img/social.png 會自動換上</span></div>
+      <div data-at="1"><div class="collage"><img src="img/design-2.jpg" alt=""><div class="r2"><img src="img/design-1.jpg" alt=""><img src="img/design-3.jpg" alt=""></div></div></div>
+      <div class="social-pop" data-at="2">
+        <div class="sstack"><img class="ig" src="img/social-ig.jpg" alt=""><img class="th" src="img/social-th.jpg" alt=""></div>
         <div class="topics"><span>Notion</span><span>生產力</span><span>設計</span></div>
         <div class="ig">@whatghost_design</div>
       </div>
+      <div data-at="3"><div class="classpic"><img src="img/class.jpg" alt=""><span class="badge">6/4 完課</span></div></div>
     </div>
   </div>
 </section>
@@ -357,11 +385,12 @@ b,strong{color:var(--ink);font-weight:700}
   <div class="vs">
     <div class="card">
       <div class="tag">以前做社群貼文</div>
-      <ul><li>想到什麼就做什麼</li><li>好點子隔沒幾天就拋到腦後</li><li>沒規劃內容，流程每次都不一樣</li><li>效果跟效率都不好</li></ul>
+      <ul><li>想到什麼就做什麼</li><li>好點子隔沒幾天就拋到腦後</li><li>沒規劃內容，流程每次都不一樣</li><li>效果跟效率都不好</li><li>無法持續優化</li></ul>
     </div>
     <div class="card dark" data-in="1">
       <div class="tag">把 NOTION 引入公司之後</div>
-      <ul><li>才開始為工作建立流程</li><li>沒有流程，根本建不出系統</li></ul>
+      <ul><li>才開始為公司建立流程</li></ul>
+      <div class="hint" style="margin-top:16px">( 沒有流程，根本建不出系統 )</div>
     </div>
   </div>
 </section>
@@ -389,12 +418,12 @@ b,strong{color:var(--ink);font-weight:700}
       <h2>把能力應用在其他地方</h2>
       <div class="rows" style="margin-top:36px">
         <div class="row" style="grid-template-columns:96px 1fr"><span class="n">公司</span><div><h3>報價系統流程</h3><div class="hint" style="margin-top:4px">減少老闆與客戶反覆溝通</div></div></div>
-        <div class="row" style="grid-template-columns:96px 1fr"><span class="n">公司</span><div><h3>勘驗流程</h3><div class="hint" style="margin-top:4px">含收費、後續追蹤</div></div></div>
-        <div class="row" style="grid-template-columns:96px 1fr"><span class="n">離職後</span><div><h3>我的接案流程、內容瀑布流程</h3></div></div>
+        <div class="row" style="grid-template-columns:96px 1fr"><span class="n">公司</span><div><h3>勘驗流程</h3><div class="hint" style="margin-top:4px">含收費、後續追蹤，增加成交率</div></div></div>
+        <div class="row" style="grid-template-columns:96px 1fr"><span class="n">離職後</span><div><h3>我的接案流程、電子報流程</h3></div></div>
       </div>
       <div class="callout" data-in="1">不用犧牲品質，用更少的時間完成更多事情</div>
     </div>
-    <div class="ph" data-img="img/flow.png" style="height:540px"><b>圖片建議</b>Notion 貼文流程資料庫<br>或報價系統截圖<br><span class="small">放 img/flow.png 會自動換上</span></div>
+    <div class="ph contain" data-img="img/flow.jpg" style="height:540px"></div>
   </div>
 </section>
 
@@ -408,10 +437,10 @@ b,strong{color:var(--ink);font-weight:700}
 <!-- P12 前後端：網站 → Notion → AI -->
 <section class="slide center" data-steps="2">
   <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立系統的能力</div>
-  <h2>Notion 讓我看懂前後端的對應</h2>
+  <h2>前端 × 後端</h2>
   <div class="fe">
     <div class="col">
-      <h3>網站 <small>我最早理解前後端的地方</small></h3>
+      <h3>網站 <small>我最早認識前後端的地方</small></h3>
       <div class="split">
         <div class="layer front"><span class="k">前端</span><span class="v">網站頁面<small>大家看到、可以操作</small></span></div>
         <div class="layer back"><span class="k">後端</span><span class="v">網站資料<small>儲存、管理資料的地方</small></span></div>
@@ -419,7 +448,7 @@ b,strong{color:var(--ink);font-weight:700}
     </div>
     <div class="arr" data-in="1">→</div>
     <div class="col" data-in="1">
-      <h3>Notion <small>前後端的集合體（非技術上）</small></h3>
+      <h3>Notion <small>讓我更理解前後端</small></h3>
       <div class="fused">
         <div class="layer front"><span class="k">前端</span><span class="v">首頁<small>大家可以操作的地方</small></span></div>
         <div class="layer back"><span class="k">後端</span><span class="v">每個資料庫<small>資料都存在這裡</small></span></div>
@@ -434,7 +463,7 @@ b,strong{color:var(--ink);font-weight:700}
   <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>建立系統的能力</div>
   <div style="display:flex;align-items:baseline;justify-content:space-between;gap:40px;margin-bottom:28px">
     <h2 style="font-size:52px">請 AI 做的個人控制台</h2>
-    <div class="hint" style="margin:0">不用寫複雜公式，能做到的功能也更多</div>
+    <div class="hint" style="margin:0">不用寫複雜的公式，能做的功能卻更多</div>
   </div>
   <div class="shot" style="max-height:560px;overflow:hidden"><img src="img/dashboard.png" alt="個人控制台"></div>
 </section>
@@ -442,8 +471,8 @@ b,strong{color:var(--ink);font-weight:700}
 <!-- P14 小結 -->
 <section class="slide center">
   <div class="eyebrow">01 Notion 只是工具<span class="sep"></span>小結</div>
+  <p class="lead" style="margin:0 0 32px">這些都是脫離 Notion 之後，可以應用在任何地方的關鍵技能</p>
   <div class="quote">AI、資訊爆炸的時代，<br>會越來越需要<br>能梳理<u style="text-underline-offset:14px;text-decoration-thickness:6px">流程</u>、<u style="text-underline-offset:14px;text-decoration-thickness:6px">系統</u>的人</div>
-  <p class="hint" style="margin-top:40px">這些都是脫離 Notion 之後，可以應用在任何地方的關鍵技能</p>
 </section>
 
 <!-- P15 段落 02 -->
@@ -462,6 +491,7 @@ b,strong{color:var(--ink);font-weight:700}
       <div class="stat">
         <div><div class="v">1 年</div><div class="l">經營時間</div></div>
         <div><div class="v">125</div><div class="l">篇貼文</div></div>
+        <div><div class="v">65</div><div class="l">篇電子報</div></div>
       </div>
     </div>
     <div class="cats hl-group">
@@ -544,9 +574,9 @@ b,strong{color:var(--ink);font-weight:700}
     <div class="chain" style="margin-top:56px">
       <span class="pill">累積信任感</span><span class="arr">→</span>
       <span class="pill">認識前輩、專家、觀眾</span><span class="arr">→</span>
-      <span class="pill dark">下一個機會的來源</span>
+      <span class="pill dark">都是機會來源</span>
     </div>
-    <div class="quote" data-in="1" style="margin-top:80px;font-size:64px">但機會不會自己找上門</div>
+    <div class="quote" data-in="1" style="margin-top:80px;font-size:64px">但機會不會自己找上門<span class="next-arrow">→</span></div>
   </div>
 </section>
 
@@ -562,10 +592,10 @@ b,strong{color:var(--ink);font-weight:700}
       <div class="u" data-hl="4"><span class="n">04</span><div><h3>參加實體聚會</h3><p>線上建立好感，線下建立信任</p></div></div>
     </div>
     <div class="swap" style="height:560px">
-      <div data-at="1"><div class="ph" data-img="img/use-1.png"><b>案例／客戶回饋</b>例如客戶回饋截圖、做過的案子<br><span class="small">img/use-1.png</span></div></div>
-      <div data-at="2"><div class="ph" data-img="img/use-2.png"><b>自己做的產品</b>例如 Gumroad 模板商品頁<br><span class="small">img/use-2.png</span></div></div>
-      <div data-at="3"><div class="ph" data-img="img/use-3.png"><b>服務說明</b>例如官網服務頁面<br><span class="small">img/use-3.png</span></div></div>
-      <div data-at="4"><div class="ph" data-img="img/use-4.png"><b>實體聚會</b>例如聚會現場照片<br><span class="small">img/use-4.png</span></div></div>
+      <div data-at="1"><div class="ph" data-img="img/use-1.jpg"></div></div>
+      <div data-at="2"><div class="ph" data-img="img/use-2.jpg"></div></div>
+      <div data-at="3"><div class="ph" data-img="img/use-3.jpg"></div></div>
+      <div data-at="4"><div class="ph" data-img="img/use-4.jpg"></div></div>
     </div>
   </div>
 </section>
@@ -590,11 +620,11 @@ b,strong{color:var(--ink);font-weight:700}
       <div class="u" data-hl="5"><span class="n">05</span><div><h3>官網 SEO</h3><p>長期持續的被動開發，但需要蠻長的時間</p></div></div>
     </div>
     <div class="swap" style="height:540px">
-      <div data-at="1"><div class="ph" data-img="img/lead-1.png"><b>開發信／私訊</b>例如寄出的開發信畫面<br><span class="small">img/lead-1.png</span></div></div>
-      <div data-at="2"><div class="ph" data-img="img/lead-2.png"><b>社群貼文</b>例如帶來詢問的那篇貼文<br><span class="small">img/lead-2.png</span></div></div>
-      <div data-at="3"><div class="ph" data-img="img/lead-3.png"><b>Demo</b>例如做過的 Demo 畫面<br><span class="small">img/lead-3.png</span></div></div>
-      <div data-at="4"><div class="ph" data-img="img/lead-4.png"><b>面試</b>例如作品集或面試時展示的東西<br><span class="small">img/lead-4.png</span></div></div>
-      <div data-at="5"><div class="ph" data-img="img/lead-5.png"><b>官網 SEO</b>例如官網文章或搜尋結果截圖<br><span class="small">img/lead-5.png</span></div></div>
+      <div data-at="1"><div class="ph" data-img="img/lead-1.jpg"></div></div>
+      <div data-at="2"><div class="ph" data-img="img/lead-2.jpg"></div></div>
+      <div data-at="3"><div class="ph" data-img="img/lead-3.jpg"></div></div>
+      <div data-at="4"><div class="redact"><img src="img/lead-4.jpg" alt=""><div class="quotes"><p class="k">面試時對方的回覆（已模糊）</p><p>「希望透過配合的外包設計人員，協助分擔內部大量的圖文製作需求」</p><p>「剛好你是很符合的對象～」</p></div></div></div>
+      <div data-at="5"><div class="ph" data-img="img/lead-5.jpg"></div></div>
     </div>
   </div>
 </section>
@@ -604,8 +634,8 @@ b,strong{color:var(--ink);font-weight:700}
   <div class="eyebrow">03 結束課程後的機會</div>
   <h2>案子以外，也有很多機會</h2>
   <div class="grid4">
-    <div class="tile"><span class="mono muted">01</span><div><h3>設計模板</h3><p>課程內有講到</p></div></div>
-    <div class="tile"><span class="mono muted">02</span><div><h3>客製化系統</h3><p>（非 Notion）深入研究各種不同的系統</p></div></div>
+    <div class="tile"><span class="mono muted">01</span><div><h3>設計各種模板</h3><p>課程內有講到</p></div></div>
+    <div class="tile"><span class="mono muted">02</span><div><h3>客製化系統</h3><p>深入研究各種不同的系統</p></div></div>
     <div class="tile"><span class="mono muted">03</span><div><h3>開發小工具</h3><p>之類的項目</p></div></div>
     <div class="tile" data-in="1" style="background:var(--ink);color:#fff"><span class="mono" style="color:rgba(255,255,255,.5)">意外收穫</span><div><h3 style="color:#fff">政府講師</h3><p style="color:rgba(255,255,255,.7)">明年可能有機會開課！</p></div></div>
   </div>
@@ -614,7 +644,7 @@ b,strong{color:var(--ink);font-weight:700}
 <!-- P26 關鍵 -->
 <section class="slide center">
   <div class="eyebrow">03 結束課程後的機會<span class="sep"></span>機會真的很多，我覺得關鍵是</div>
-  <div class="quote" style="font-size:76px">看哪邊可以延伸、<br>創造價值</div>
+  <div class="quote" style="font-size:76px">持續將能力延伸、<br>創造各種價值</div>
   <div class="chain" style="margin-top:56px">
     <span class="pill">不斷吸收新的資訊</span><span class="arr">×</span>
     <span class="pill">與現有的技能融合</span>
@@ -630,7 +660,7 @@ b,strong{color:var(--ink);font-weight:700}
       <p style="margin-top:28px">歡迎提問</p>
       <button class="home" data-home>↺ 回到首頁</button>
     </div>
-    <div class="ph qr" data-img="img/qr.png"><b>QR Code</b><span class="small">放 img/qr.png</span></div>
+    <div class="qrbox"><img src="img/qr.svg" alt="Instagram QR Code"><div>@whatghost_design</div></div>
   </div>
 </section>
 
