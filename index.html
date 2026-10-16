@@ -667,7 +667,7 @@ b,strong{color:var(--ink);font-weight:700}
 <div id="progress"></div>
 <div id="counter"></div>
 </div>
-<div id="hint">點擊 / 滾輪 / → 下一步　← 上一步　F 全螢幕　Home 回首頁</div>
+<div id="hint">左鍵 / 滾輪 / → 下一步　右鍵 / ← 上一步　F 全螢幕　Home 回首頁</div>
 
 <script>
 (() => {
@@ -748,17 +748,19 @@ b,strong{color:var(--ink);font-weight:700}
   });
   addEventListener('click', e => {
     if (e.target.closest('[data-home]')) return goHome();
-    e.clientX < innerWidth * 0.2 ? prev() : next();
+    next();
   });
   addEventListener('contextmenu', e => { e.preventDefault(); prev(); });
-  // 滾輪上下頁（觸控板一次滑動只算一步）
-  let wheelLock = 0;
+  // 滾輪上下頁：可連續滾動，每滾一格（約 100）走一步；觸控板的小幅滑動會累積
+  let wheelAcc = 0, wheelIdle;
   addEventListener('wheel', e => {
     e.preventDefault();
-    const now = Date.now();
-    if (Math.abs(e.deltaY) < 8 || now < wheelLock) return;
-    wheelLock = now + 650;
-    e.deltaY > 0 ? next() : prev();
+    wheelAcc += e.deltaMode === 1 ? e.deltaY * 33 : e.deltaY;
+    clearTimeout(wheelIdle);
+    wheelIdle = setTimeout(() => { wheelAcc = 0; }, 250);
+    while (Math.abs(wheelAcc) >= 100) {
+      if (wheelAcc > 0) { next(); wheelAcc -= 100; } else { prev(); wheelAcc += 100; }
+    }
   }, { passive: false });
   addEventListener('resize', fit);
 
